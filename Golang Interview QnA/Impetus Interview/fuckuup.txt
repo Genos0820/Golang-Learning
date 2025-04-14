@@ -1,0 +1,67 @@
+package main
+
+import (
+	//"encoding/json"
+	"fmt"
+	//"io"
+	"net/http"
+)
+
+func main() {
+	data, err := http.Get("https://vpic.nhtsa.dot.gov/api/vehicles/getallmanufacturers?format=json")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(data.Request.Response.Body)
+	}
+	json.NewDecoder(da)
+ 	body, err := io.ReadAll(data.Body)
+ 	if err == nil {
+ 		fmt.Println(body)--
+	}
+}
+//
+
+
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+type Response struct {
+	Results []map[string]interface{} `json:"Results"`
+}
+
+func main() {
+	url := "https://vpic.nhtsa.dot.gov/api/vehicles/getallmanufacturers?format=json" // Updated URL
+	response, err := http.Get(url)
+	if err != nil {
+		fmt.Println("Error fetching the URL:", err)
+		return
+	}
+	defer response.Body.Close()
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		fmt.Println("Error reading response body:", err)
+		return
+	}
+
+	var result Response
+	err = json.Unmarshal(body, &result)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return
+	}
+
+	fmt.Println("Countries:")
+	for _, item := range result.Results {
+		if country, ok := item["Country"].(string); ok {
+			fmt.Println(country)
+		}
+	}
+}

@@ -1,0 +1,49 @@
+# representation in golang
+# brush up the cpre concepts
+# work on the channels questions
+# golang context
+
+
+
+api sdui(server driven ui)
+
+sku(10 bottles)
+container(multiple type of things in one container)
+planogram(organize krna for the fastest deliver)
+api (Data in cache, how to stack in bin(cell)(different aisle different storage different floor))
+
+//NPCI Interview
+package main
+
+import (
+  "fmt"
+  "sync"
+)
+
+func main() {
+  ch := make(chan *int, 4)
+  array := []int{1, 2, 3, 4}
+  wg := sync.WaitGroup{}
+  wg.Add(1)
+  go func() {
+    for _, value := range array {
+      ch <- &value
+    }
+	close(ch)
+  }()
+  go func() {
+    for value := range ch {
+      fmt.Println(*value) // what will be printed here?
+    }
+    wg.Done()
+  }()
+
+  wg.Wait()
+}
+ //
+
+
+#kuberenetes questions, docker questions
+#go mod dependencies,git rebase,docker phrases
+#write a code in go lang to listen on localhost
+#write code in golang to fetch data from a URL , and change data to string then to json then print it out
