@@ -1,0 +1,9 @@
+-Helm
+-controller-manager
+-write Operator(controller)
+-How to know database pod has been up and running before our application pod starts running(Ans: Init containers, liveness probe)
+-two pvc claiming one PV, is it possible
+-pv: 2gi and pvc 1gi....what space will show when kubectl describe pvc runs
+-change replica set values for different environment prod, dev dynamically(helm)
+-node-a->service-a->namespace-a, nod-b->service-b->namespace-b, define the url between them
+

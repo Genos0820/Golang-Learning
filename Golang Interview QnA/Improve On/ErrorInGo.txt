@@ -1,0 +1,45 @@
+-Error in Golang, custom errors.
+Error i golang are treated as value, errors in golang are managed by the return value from a function
+errors.New("") and fmt.Errorf("%d",i) are same way to give error.
+custom erros are great way to modify your errors but those custom errors need to implement the Error() string method of the interface of error.
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+type MyError struct {
+	code    int
+	message string
+}
+
+func (e *MyError) Error() string {
+	return fmt.Sprintf("Code %d:%s", e.code, e.message)
+}
+
+func main() {
+	s, err := giveSomeError(2)
+	s2, err2 := giveSomeError(1)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if err2 != nil {
+		fmt.Println(err2.Error())
+	}
+	fmt.Println(s, s2)
+	if s == "yes" {
+		fmt.Println(errors.New("Whattttttt"))
+	}
+}
+
+func giveSomeError(val int) (string, error) {
+	if val != 2 {
+		return "", &MyError{
+			code:    404,
+			message: "not Found",
+		}
+	}
+	return "yes", nil
+}

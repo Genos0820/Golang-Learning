@@ -1,0 +1,57 @@
+Question 02: How do you optimize Go code for performance?
+
+Answer: Performance optimization in Go includes using efficient algorithms, minimizing memory allocations, profiling code with pprof, and using concurrency where appropriate. For example:
+
+import "net/http/pprof"
+
+// Start profiling
+go func() {
+    log.Println(http.ListenAndServe("localhost:6060", nil))
+}()
+
+--------------
+Slice
+s:=make([]int,5)
+var s []int
+array
+arr:=[5]int{1,2,3,4,5}
+var arr [5]int
+
+declaration a:=[...]int{1,2,3} creates an array, not a slice [1, 5]
+The ... syntax tells the Go compiler to infer the length of the array based on the number of elements provided in the literal
+
+-------------
+channels & WaitGroup
+ch:=make(chan int,3)
+var wg sync.WaitGroup
+wg.Add(2)
+-------------
+Question 03: What is the purpose of the context package in Go?
+
+Answer: The context package in Go is used to manage request-scoped values, cancellation signals, and deadlines across API boundaries and between goroutines. It provides a way to pass metadata and control signals through function calls and goroutines, helping manage the lifecycle of operations.
+
+By using context.Context, developers can propagate timeouts, cancellation, and request-specific data, making it easier to coordinate tasks and handle errors. This package is essential for building robust, concurrent Go applications.
+
+
+#package timeouts
+
+import github.com/gin-gonic/gin
+
+func handler(c *gin.Context){
+    c.JSON(200,gin.H{"message":"success"})
+}
+
+func main(){
+    router:=gin.Default()
+    router.GET("\",handler)
+    router.Run(":8080")
+}
+
+
+CREATE TABLE table_name (
+    column1_name data_type [constraints],
+    column2_name data_type [constraints],
+    ...
+    columnN_name data_type [constraints],
+    PRIMARY KEY (column_name(s)) -- Optional, for defining primary key
+);

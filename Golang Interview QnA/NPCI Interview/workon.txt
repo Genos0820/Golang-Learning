@@ -1,5 +1,5 @@
 # representation in golang
-# brush up the cpre concepts
+# brush up the core concepts
 # work on the channels questions
 # golang context
 
@@ -46,4 +46,32 @@ func main() {
 #kuberenetes questions, docker questions
 #go mod dependencies,git rebase,docker phrases
 #write a code in go lang to listen on localhost
+
+package listenOnLocalHost
+
+import "github.com/gin-gonic/gin"
+
+func main(){
+  router:=gin.Default()
+
+  router.GET("/",handlerFunc)
+
+  router.Run(":8080")
+}
+
+func handlerFunc(c *gin.context){
+  c.JSON(200,gin.H{"Message":"Listening on 8080"})
+}
+
+func main(){
+  http.HandlerFunc("/",handler)
+  http.ListenAndServe("localhost:8080",nil)
+
+}
+func handler(w http.ResponseWriter,r *http.Request){
+	fmt.Fprintf(w, "Hello from Go server on localhost! You requested: %s", r.URL.Path)
+}
+
+
+
 #write code in golang to fetch data from a URL , and change data to string then to json then print it out

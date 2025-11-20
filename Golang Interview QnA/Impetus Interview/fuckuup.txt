@@ -1,3 +1,6 @@
+
+Q: Given a json response from an API, write a Go program to extract the country names from the response.	
+
 package main
 
 import (

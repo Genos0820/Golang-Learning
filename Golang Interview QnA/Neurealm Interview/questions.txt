@@ -1,0 +1,102 @@
+declaration a:=[...]int{1,2,3} creates an array, not a slice [1, 5]
+The ... syntax tells the Go compiler to infer the length of the array based on the number of elements provided in the 
+
+diffrence between memory management(javescript vs python vs golang)
+oops concept(Abstraction)
+
+write cron job using go routines
+
+
+
+//
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	b := a[2:]
+	b[0] = 9
+	b = append(b, 10)
+	fmt.Println(a, b)
+}
+
+
+// Print odd number using 1 go routine, even number using 2nd go routine
+// 1 2 3 4 5 6 7 8 9 10
+//Solution: https://go.dev/play/p/iPDBnF158wj
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+func main() {
+	oddChan := make(chan int)
+	evenChan := make(chan int)
+	var wg sync.WaitGroup
+	go printOdd(oddChan, evenChan, &wg)
+	go printEven(oddChan, evenChan, &wg)
+	wg.Add(2)
+	oddChan <- 1
+	wg.Wait()
+}
+
+func printOdd(oddChan chan int, evenChan chan int, wg *sync.WaitGroup) {
+	for i := 1; i < 10; i += 2 {
+		<-oddChan
+		fmt.Println(i)
+		evenChan <- 1
+	}
+	wg.Done()
+}
+
+func printEven(oddChan chan int, evenChan chan int, wg *sync.WaitGroup) {
+	for i := 2; i <= 10; i += 2 {
+		<-evenChan
+		fmt.Println(i)
+		if i < 10 {
+			oddChan <- 1
+		}
+	}
+	wg.Done()
+}
+
+// You can edit this code!
+// Click here and start typing.
+// compress the string and return the shorter string
+// aabcccccaa=>a2b1c5a2
+// aabcd=>aabcd(not a2b1c1d1 bcz it long the intitial string)
+// Solution: https://go.dev/play/p/3zoslMX3p8k
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	s := "aabcd"
+	ans := compressString(s)
+	fmt.Println(ans)
+}
+
+func compressString(s string) string {
+	compressedString := ""
+	charValMap := make(map[rune]int)
+	for i, v := range s {
+		charValMap[v]++
+		if i != 0 && rune(s[i-1]) != v {
+			compressedString = compressedString + fmt.Sprintf("%s%d", string(rune(s[i-1])), charValMap[rune(s[i-1])])
+			charValMap[rune(s[i-1])] = 0
+		}
+	}
+	compressedString = compressedString + fmt.Sprintf("%s%d", string(rune(s[len(s)-1])), charValMap[rune(s[len(s)-1])])
+
+	if len(compressedString) > len(s) {
+		return s
+	}
+	return compressedString
+}

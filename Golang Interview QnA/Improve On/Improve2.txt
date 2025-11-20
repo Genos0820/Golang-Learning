@@ -1,0 +1,33 @@
+Improve On:
+
+-Coding questions for the golang(goroutines,channels,waitgroups)
+-How you use go routines in your project
+-Best practices to make an API
+-Documentation of the API
+-Gorm golang
+-Differnce between the memory management of Golang,javascript and python
+
+package main
+
+import (
+	"fmt"
+	"runtime"
+	"sync"
+)
+
+func main() {
+	runtime.GOMAXPROCS(1) // Limit to 1 CPU core to potentially make the race more apparent
+	var counter int
+	var wg sync.WaitGroup
+
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			counter++ // Data race: multiple goroutines modifying 'counter' without synchronization
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println("Final Counter:", counter)
+}

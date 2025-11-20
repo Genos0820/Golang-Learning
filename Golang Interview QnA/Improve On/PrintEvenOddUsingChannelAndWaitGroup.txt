@@ -1,0 +1,39 @@
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+func main() {
+	evenChan := make(chan int)
+	oddChan := make(chan int)
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	go printOdds(oddChan, evenChan, &wg)
+	go printEvens(evenChan, oddChan, &wg)
+
+	oddChan <- 1
+	wg.Wait()
+}
+
+func printOdds(oddChan, evenChan chan int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for i := 1; i <= 9; i += 2 {
+		<-oddChan
+		fmt.Println(i)
+		evenChan <- 1
+	}
+}
+
+func printEvens(evenChan, oddChan chan int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for i := 2; i <= 10; i += 2 {
+		<-evenChan
+		fmt.Println(i)
+		if i < 10 {
+			oddChan <- 1
+		}
+	}
+}

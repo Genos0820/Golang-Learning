@@ -1,0 +1,36 @@
+Improve On:
+
+-Error in Golang, custom errors.(https://www.programiz.com/golang/errors)
+Error in golang are treated as value, errors in golang are managed by the return value from a function
+errors.New("") and fmt.Errorf("%d",i) are same way to give error.
+custom erros are great way to modify your errors but those custom errors need to implement the Error() string method of the interface of error.
+
+
+-Counting number of repeating words in a Golang String
+string.Count(s,m)
+i did it correctly
+
+-Inheritance in Golang(https://medium.com/@peterbi_91340/implement-true-inheritance-in-go-ff6243bfd7a8)
+it can done by two way struct embedding and using interfaces.
+Struct embedding: type rect struct{ width int;length int;}....type square struct{ rect}
+interface: geometery,rectangle,circle....measure(g geometery)
+create variable of different struct but pass them to the fucntion who takes struct which both have inherited
+
+
+-MongoDB, how to write query learn some interview questions
+use myDb
+db.dropDatabase()
+db.createCollection("myCol")
+db.myCol.drop()
+
+https://www.interviewbit.com/mongodb-interview-questions/
+https://www.tutorialspoint.com/mongodb/mongodb_query_document.htm
+
+-kafka,if message event fails what happens, dead letter queue
+
+Managing Kafka Consumer Errors Strategies for Retry and ...When an event fails to be processed by a Kafka consumer, several actions can be taken, depending on the implementation and configuration. Kafka itself doesn't automatically handle failed messages in a way that prevents data loss. It's up to the consumer application to implement retry mechanisms or other error handling strategies. 
+
+Dead Letter Queue (DLQ): Move the failed message to a separate topic for later handling. 
+
+A Kafka Dead Letter Queue (DLQ) is a topic in Kafka that stores messages that failed to be processed by a consumer. It's a mechanism for handling messages that encounter errors, such as processing failures, malformed data, or system anomalies, without blocking the main processing pipeline. Instead of discarding these failed messages, they are routed to the DLQ for later inspection and potential reprocessing. 
+
